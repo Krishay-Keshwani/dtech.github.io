@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>D-Tech | Disruptive Technologies</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        background: '#f4f5f7',
+                        surface: '#ffffff',
+                        textMain: '#111827',
+                        textMuted: '#475569',
+                        borderLight: '#e2e8f0',
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.03)',
+                        'float': '0 10px 40px -10px rgba(0, 0, 0, 0.08)',
+                        'hover': '0 20px 40px -10px rgba(0, 0, 0, 0.12)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f4f5f7;
+            color: #111827;
+            overflow-x: hidden;
+        }
+
+        /* Initial state for GSAP animations to prevent FOUC */
+        .gsap-reveal, .gsap-stagger-item, .gsap-hero-item {
+            visibility: hidden;
+        }
+
+        /* Framer-style smooth interactions */
+        .framer-card {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .framer-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.12);
+        }
+
+        .framer-button {
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .framer-button:active {
+            transform: scale(0.96);
+        }
+        
+        /* Clean scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Marquee specific styling */
+        .marquee-container {
+            width: 100vw;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+        .marquee-track {
+            display: inline-flex;
+            width: max-content;
+        }
+    </style>
+</head>
+<body class="antialiased font-sans">
+
+    <nav class="fixed w-full top-0 z-50 bg-[#f4f5f7]/80 backdrop-blur-md border-b border-borderLight/50 transform translate-y-[-100%]" id="navbar">
+        <div class="max-w-[1200px] mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 font-bold text-xl tracking-tight text-textMain cursor-pointer hover:opacity-70 transition-opacity">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                D-Tech
+            </div>
+            <div class="hidden md:flex gap-8 text-[15px] font-medium text-textMain">
+                <a href="#features" class="hover:text-gray-500 transition-colors">Features</a>
+                <a href="#benefits" class="hover:text-gray-500 transition-colors">Benefits</a>
+                <a href="#pricing" class="hover:text-gray-500 transition-colors">Pricing</a>
+                <a href="#blog" class="hover:text-gray-500 transition-colors">Blog</a>
+                <a href="#contact" class="hover:text-gray-500 transition-colors">Contact Us</a>
+            </div>
+            <div>
+                <a href="#contact" class="framer-button bg-textMain text-white px-5 py-2.5 rounded-full text-[15px] font-medium hover:bg-gray-800 inline-block">
+                    Try D-Tech free
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="pt-40 pb-20 px-6 text-center max-w-[1000px] mx-auto flex flex-col items-center">
+        <h1 class="gsap-hero-item text-5xl md:text-[5.5rem] font-bold tracking-tight leading-[1.05] text-textMain mb-6">
+            Make society resilient<br>and sustainable <span class="hidden">[cite: 13]</span>
+        </h1>
+        <p class="gsap-hero-item text-lg md:text-xl text-textMuted max-w-2xl mb-10 font-normal">
+            A startup focusing on Disruptive Technologies to solve issues related to disaster management, climate change, and sustainable development. <span class="hidden">[cite: 12, 13, 26]</span>
+        </p>
+        <div class="gsap-hero-item flex gap-4 items-center mb-20">
+            <a href="#contact" class="framer-button bg-textMain text-white px-7 py-3.5 rounded-full text-[16px] font-medium hover:bg-gray-800 shadow-lg shadow-gray-900/20 inline-block">
+                Try D-Tech free
+            </a>
+            <a href="#features" class="framer-button bg-transparent text-textMain px-7 py-3.5 rounded-full text-[16px] font-medium hover:bg-gray-200 transition-colors inline-block">
+                See features
+            </a>
+        </div>
+
+        <div class="gsap-hero-item w-full bg-white rounded-[2rem] shadow-float border border-borderLight h-[500px] md:h-[600px] flex overflow-hidden text-left hover:shadow-hover transition-shadow duration-500">
+            <div class="w-64 border-r border-borderLight bg-gray-50/40 p-6 hidden md:flex flex-col gap-2">
+                <div class="font-bold text-lg mb-6 flex items-center gap-2">
+                    <div class="w-5 h-5 bg-black rounded-md"></div> D-Tech
+                </div>
+                <div class="px-4 py-2 bg-white shadow-sm border border-borderLight rounded-lg text-sm font-medium flex items-center gap-3 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> Home</div>
+                <div class="px-4 py-2 text-textMuted hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium flex items-center gap-3 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg> COBRA Nodes</div>
+                <div class="px-4 py-2 text-textMuted hover:bg-gray-100 rounded-lg transition-colors text-sm font-medium flex items-center gap-3 cursor-pointer"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg> Flood Alerts</div>
+            </div>
+            <div class="flex-1 p-8 bg-white flex flex-col gap-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-2xl font-bold text-textMain">Hello, Command</h2>
+                        <p class="text-sm text-textMuted mt-1">What are we monitoring today?</p>
+                    </div>
+                    <div class="px-4 py-2 bg-gray-100 text-textMain rounded-full text-sm font-bold flex items-center gap-2">
+                        0:00:00 <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-5 rounded-2xl border border-borderLight bg-gray-50/50 hover:border-gray-300 transition-colors cursor-pointer">
+                        <p class="text-sm text-textMuted font-medium mb-2">Total active nodes</p>
+                        <p class="text-3xl font-bold text-textMain">455 <span class="text-sm text-green-600 bg-green-100 px-2 py-0.5 rounded-full ml-2">+10.4%</span></p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-borderLight bg-gray-50/50 hover:border-gray-300 transition-colors cursor-pointer">
+                        <p class="text-sm text-textMuted font-medium mb-2">Warnings issued</p>
+                        <p class="text-3xl font-bold text-textMain">55 <span class="text-sm text-red-600 bg-red-100 px-2 py-0.5 rounded-full ml-2">-8.0%</span></p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-borderLight bg-gray-50/50 hover:border-gray-300 transition-colors cursor-pointer">
+                        <p class="text-sm text-textMuted font-medium mb-2">Hardware online</p>
+                        <p class="text-3xl font-bold text-textMain">400 <span class="text-sm text-green-600 bg-green-100 px-2 py-0.5 rounded-full ml-2">+12.8%</span></p>
+                    </div>
+                    <div class="p-5 rounded-2xl border border-borderLight bg-gray-50/50 hover:border-gray-300 transition-colors cursor-pointer">
+                        <p class="text-sm text-textMuted font-medium mb-2">Uptime logged</p>
+                        <p class="text-3xl font-bold text-textMain">600hrs <span class="text-sm text-red-600 bg-red-100 px-2 py-0.5 rounded-full ml-2">-1.2%</span></p>
+                    </div>
+                </div>
+                <div class="flex-1 rounded-2xl border border-borderLight bg-gray-50/50 p-6 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-6">
+                        <p class="text-sm font-bold text-textMain">Detection over time</p>
+                        <span class="text-xs border border-borderLight px-3 py-1 rounded-md bg-white">Month ⌄</span>
+                    </div>
+                    <div class="absolute bottom-6 left-6 right-6 h-32 flex items-end gap-3">
+                        <div class="flex-1 bg-blue-100 rounded-t-md h-[40%] group-hover:h-[45%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-200 rounded-t-md h-[60%] group-hover:h-[65%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-100 rounded-t-md h-[30%] group-hover:h-[35%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-300 rounded-t-md h-[80%] group-hover:h-[85%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-100 rounded-t-md h-[50%] group-hover:h-[55%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-400 rounded-t-md h-[90%] group-hover:h-[95%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-200 rounded-t-md h-[70%] group-hover:h-[75%] transition-all duration-500"></div>
+                        <div class="flex-1 bg-blue-100 rounded-t-md h-[40%] group-hover:h-[45%] transition-all duration-500"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-10 border-b border-borderLight/50 overflow-hidden gsap-reveal">
+        <div class="max-w-[1000px] mx-auto px-6 text-center mb-8">
+            <p class="text-[13px] font-bold text-textMuted uppercase tracking-widest">Trusted by global agencies, NGOs and governments <span class="hidden">[cite: 203]</span></p>
+        </div>
+        <div class="marquee-container">
+            <div class="marquee-track flex gap-16 md:gap-24 items-center opacity-50 grayscale font-bold text-2xl" id="marquee">
+                <span>UN Agencies</span><span class="tracking-widest">CDRI</span><span>IUCN</span><span>IRDR</span><span class="font-serif">TCS Group</span>
+                <span>UN Agencies</span><span class="tracking-widest">CDRI</span><span>IUCN</span><span>IRDR</span><span class="font-serif">TCS Group</span>
+                <span>UN Agencies</span><span class="tracking-widest">CDRI</span><span>IUCN</span><span>IRDR</span><span class="font-serif">TCS Group</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-[1200px] mx-auto text-center gsap-reveal" id="features">
+        <p class="text-sm font-bold text-textMuted uppercase tracking-widest mb-4">SEAMLESS ACROSS DEVICES</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-12">Work from anywhere,<br>stay in sync</h2>
+        <div class="w-full h-[400px] md:h-[600px] bg-[#fdfaf5] rounded-[2rem] shadow-soft overflow-hidden relative border border-borderLight hover:shadow-hover transition-shadow duration-500 flex flex-col items-center justify-end">
+            <div class="w-[300px] h-[80%] bg-black rounded-t-[3rem] border-8 border-gray-800 flex items-center justify-center text-white font-mono text-sm shadow-2xl relative z-10">
+                [ Mobile App UI ]
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-4 z-20">
+                <span class="bg-textMain text-white px-6 py-2 rounded-full text-sm font-bold shadow-sm cursor-pointer hover:scale-105 transition-transform">Mobile App</span>
+                <span class="bg-white text-textMain px-6 py-2 rounded-full text-sm font-bold shadow-sm border border-borderLight cursor-pointer hover:scale-105 transition-transform">Web App</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-[1200px] mx-auto gsap-reveal">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div class="order-2 md:order-1 h-[450px] bg-white rounded-[2rem] shadow-soft border border-borderLight p-8 overflow-hidden relative hover:shadow-hover transition-shadow duration-500 group">
+                <div class="bg-gray-50 border border-borderLight rounded-xl h-full p-4 flex flex-col gap-3 transform group-hover:scale-[1.02] transition-transform duration-500">
+                    <div class="flex justify-between items-center border-b border-borderLight pb-3 mb-2">
+                        <span class="font-bold">Hardware Projects</span>
+                        <span class="bg-white border border-borderLight px-3 py-1 rounded-md text-xs font-medium cursor-pointer hover:bg-gray-50"><svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg> Filter</span>
+                    </div>
+                    <div class="bg-white border border-borderLight p-3 rounded-lg text-sm flex justify-between items-center shadow-sm cursor-pointer hover:border-gray-300">
+                        <span class="font-medium">COBRA Rescue Unit <span class="hidden">[cite: 84]</span></span>
+                        <span class="bg-red-100 text-red-700 px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-red-500"></div> High</span>
+                    </div>
+                    <div class="bg-white border border-borderLight p-3 rounded-lg text-sm flex justify-between items-center shadow-sm cursor-pointer hover:border-gray-300">
+                        <span class="font-medium">River Warning System <span class="hidden">[cite: 87]</span></span>
+                        <span class="bg-yellow-100 text-yellow-700 px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div> Medium</span>
+                    </div>
+                    <div class="bg-white border border-borderLight p-3 rounded-lg text-sm flex justify-between items-center shadow-sm cursor-pointer hover:border-gray-300">
+                        <span class="font-medium">AI Processing Hub</span>
+                        <span class="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-bold flex items-center gap-1"><div class="w-1.5 h-1.5 rounded-full bg-green-500"></div> Low</span>
+                    </div>
+                </div>
+            </div>
+            <div class="order-1 md:order-2">
+                <p class="text-sm font-bold text-textMuted uppercase tracking-widest mb-4">DISASTER MANAGEMENT</p>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-6">Keep every project moving forward</h2>
+                <p class="text-lg text-textMuted mb-8 leading-relaxed">
+                    A robot to conduct search activities in collapsed structures. Based on the need the robot can be customised for working on land and water. Useful for disaster search and rescue, surveys, and fire incidents. <span class="hidden">[cite: 85, 86]</span>
+                </p>
+                <a href="#contact" class="framer-button bg-textMain text-white px-6 py-3 rounded-full text-[15px] font-bold shadow-sm inline-flex items-center gap-2 mb-8">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Try D-Tech free
+                </a>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg> Sensors</div>
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Telemetry</div>
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg> Analytics</div>
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg> Reports</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 px-6 max-w-[1200px] mx-auto gsap-reveal">
+        <div class="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+                <p class="text-sm font-bold text-textMuted uppercase tracking-widest mb-4">ENVIRONMENTAL TRACKING</p>
+                <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-6">Track levels, get alerts, stress less</h2>
+                <p class="text-lg text-textMuted mb-8 leading-relaxed">
+                    A low-cost automatic flood early warning designed to generate flood and evacuation warnings through lights and sirens for communities. CDRI recognized. <span class="hidden">[cite: 88, 89]</span>
+                </p>
+                <a href="#contact" class="framer-button bg-white border border-borderLight text-textMain px-6 py-3 rounded-full text-[15px] font-bold shadow-sm inline-block mb-8 hover:bg-gray-50">
+                    Try D-Tech free
+                </a>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max bg-white"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg> Monitoring</div>
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max bg-white"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg> Alerts</div>
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max bg-white"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg> Forecasting</div>
+                    <div class="flex items-center gap-2 text-sm font-semibold border border-borderLight rounded-full px-4 py-2 w-max bg-white"><svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"></path></svg> Integrations</div>
+                </div>
+            </div>
+            <div class="h-[450px] bg-white rounded-[2rem] shadow-soft border border-borderLight p-8 overflow-hidden flex flex-col gap-4 hover:shadow-hover transition-shadow duration-500 group">
+                <div class="flex justify-between items-center bg-gray-50 border border-borderLight p-4 rounded-xl transform group-hover:scale-[1.02] transition-transform duration-500">
+                    <div>
+                        <p class="text-xs text-textMuted font-bold uppercase">Critical Threshold</p>
+                        <p class="text-2xl font-bold mt-1">$18,090 <span class="text-sm font-normal text-gray-500">Water levels</span></p>
+                    </div>
+                    <div>
+                        <p class="text-xs text-textMuted font-bold uppercase">Expected Peak</p>
+                        <p class="text-2xl font-bold mt-1">$22,090 <span class="text-sm font-normal text-gray-500">Flood limit</span></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-white border border-borderLight p-5 rounded-xl">
+                        <p class="text-xs font-bold text-gray-500 mb-1">Flow Rate</p>
+                        <p class="text-xl font-bold">$2,325</p>
+                    </div>
+                    <div class="bg-white border border-borderLight p-5 rounded-xl">
+                        <p class="text-xs font-bold text-gray-500 mb-1">Safety Margin</p>
+                        <p class="text-xl font-bold text-green-600">89.3</p>
+                    </div>
+                </div>
+                <div class="flex-1 bg-white border border-borderLight rounded-xl p-4 flex flex-col justify-end gap-2 relative">
+                    <p class="text-xs font-bold absolute top-4 left-4">Analytics</p>
+                    <div class="flex items-end gap-2 h-2/3">
+                        <div class="flex-1 bg-gray-200 h-[30%] rounded-t-sm"></div>
+                        <div class="flex-1 bg-gray-200 h-[50%] rounded-t-sm"></div>
+                        <div class="flex-1 bg-gray-200 h-[40%] rounded-t-sm"></div>
+                        <div class="flex-1 bg-gray-300 h-[80%] rounded-t-sm"></div>
+                        <div class="flex-1 bg-green-400 h-[100%] rounded-t-sm border-t-2 border-green-600"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-[1200px] mx-auto text-center gsap-reveal-container" id="benefits">
+        <p class="gsap-reveal text-sm font-bold text-textMuted uppercase tracking-widest mb-4">FEATURES</p>
+        <h2 class="gsap-reveal text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-16">Built for resilience,<br>powered by simplicity</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-6">
+            <div class="gsap-stagger-item framer-card bg-white p-10 rounded-[2rem] border border-borderLight shadow-soft flex flex-col justify-between min-h-[350px]">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Research-Based Consultancies <span class="hidden">[cite: 66]</span></h3>
+                    <div class="flex items-center gap-4 bg-gray-50 p-4 rounded-xl w-max mb-6 border border-gray-100">
+                        <div class="w-6 h-6 rounded-full bg-black"></div>
+                        <div class="w-6 h-6 rounded-full bg-blue-500"></div>
+                        <div class="w-6 h-6 rounded-full bg-green-500"></div>
+                        <div class="w-[1px] h-6 bg-gray-300 mx-2"></div>
+                        <div class="w-10 h-6 bg-green-500 rounded-full flex items-center justify-end px-1 cursor-pointer"><div class="w-4 h-4 bg-white rounded-full"></div></div>
+                    </div>
+                </div>
+                <p class="text-textMuted text-sm">We undertake research-based consultancies to develop innovative solutions, leveraging our expertise to address complex challenges. <span class="hidden">[cite: 67]</span></p>
+            </div>
+            
+            <div class="gsap-stagger-item framer-card bg-white p-10 rounded-[2rem] border border-borderLight shadow-soft flex flex-col justify-between min-h-[350px]">
+                <div>
+                    <h3 class="text-2xl font-bold mb-4">Co-Innovation Ecosystems <span class="hidden">[cite: 74]</span></h3>
+                    <div class="grid grid-cols-4 gap-4 w-max mb-6">
+                        <div class="w-12 h-12 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center font-bold text-gray-400 cursor-pointer hover:bg-gray-100 transition-colors">#</div>
+                        <div class="w-12 h-12 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center font-bold text-blue-500 cursor-pointer hover:bg-gray-100 transition-colors">G</div>
+                        <div class="w-12 h-12 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center font-bold text-green-500 cursor-pointer hover:bg-gray-100 transition-colors">X</div>
+                        <div class="w-12 h-12 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center font-bold text-red-400 cursor-pointer hover:bg-gray-100 transition-colors">@</div>
+                    </div>
+                </div>
+                <p class="text-textMuted text-sm">If there is a problem, there is a solution. We focus on co-innovation to make the solution unique to cater to the enterprise. <span class="hidden">[cite: 75, 76]</span></p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-soft min-h-[250px]">
+                <h3 class="text-xl font-bold mb-3 text-textMain">Technological Services</h3>
+                <p class="text-sm text-textMuted">We specialize in a comprehensive range of technological services and software development to empower your mission. <span class="hidden">[cite: 80]</span></p>
+            </div>
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-soft min-h-[250px]">
+                <h3 class="text-xl font-bold mb-3 text-textMain">AI/ML Analytics</h3>
+                <p class="text-sm text-textMuted">Deploy AI/ML-driven data analytics and advanced decision-making tools directly to the edge for instant awareness. <span class="hidden">[cite: 80]</span></p>
+            </div>
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-soft min-h-[250px]">
+                <h3 class="text-xl font-bold mb-3 text-textMain">Cloud Integration</h3>
+                <p class="text-sm text-textMuted">Easily toggle between local operations and cloud services with our highly optimized mobile application solutions. <span class="hidden">[cite: 80]</span></p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-[1000px] mx-auto text-center border-t border-borderLight/50 gsap-reveal-container">
+        <h2 class="gsap-reveal text-3xl md:text-5xl font-bold tracking-tight text-textMain leading-tight mb-8">
+            "Team leadership is the secret that makes common people achieve uncommon results." <span class="hidden">[cite: 198]</span>
+        </h2>
+        <div class="gsap-reveal flex flex-col items-center gap-2 mb-20">
+            <div class="w-12 h-12 bg-gray-200 rounded-full border border-gray-300 overflow-hidden"><img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239ca3af'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Avatar"></div>
+            <p class="font-bold text-textMain">Ranit Chatterjee <span class="hidden">[cite: 200]</span></p>
+            <p class="text-sm text-textMuted">Co-Founder & CEO <span class="hidden">[cite: 201]</span></p>
+        </div>
+        
+        <div class="grid md:grid-cols-3 gap-6 text-left">
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-soft cursor-pointer">
+                <p class="text-textMuted text-sm font-medium mb-6 leading-relaxed">"During my tenure at DTECH, I undertook a diverse range of responsibilities that contributed to my professional growth and the success of various projects." <span class="hidden">[cite: 175]</span></p>
+                <p class="font-bold text-sm text-textMain">Rashmi Sharma <span class="hidden">[cite: 173]</span></p>
+                <p class="text-xs text-textMuted">Intern</p>
+            </div>
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-soft cursor-pointer">
+                <p class="text-textMuted text-sm font-medium mb-6 leading-relaxed">"Overall, my time at DTECH was marked by a proactive approach to my work, a collaborative spirit, and a dedication to contributing to the company's goals." <span class="hidden">[cite: 179]</span></p>
+                <p class="font-bold text-sm text-textMain">Ravish Ratnam <span class="hidden">[cite: 177]</span></p>
+                <p class="text-xs text-textMuted">Intern</p>
+            </div>
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-soft cursor-pointer">
+                <p class="text-textMuted text-sm font-medium mb-6 leading-relaxed">"One of the highlights of my experience was leading a team in a collaborative project, This experience enhanced my leadership and reinforced my ability to work effectively under pressure." <span class="hidden">[cite: 183]</span></p>
+                <p class="font-bold text-sm text-textMain">Abhishek Pola <span class="hidden">[cite: 181]</span></p>
+                <p class="text-xs text-textMuted">Intern</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-[1000px] mx-auto text-center gsap-reveal-container" id="pricing">
+        <p class="gsap-reveal text-sm font-bold text-textMuted uppercase tracking-widest mb-4">SOLUTIONS</p>
+        <h2 class="gsap-reveal text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-10">Simple plans for serious work</h2>
+        
+        <div class="gsap-reveal inline-flex bg-gray-200 rounded-full p-1 mb-16">
+            <button class="bg-white text-textMain px-6 py-2 rounded-full text-sm font-bold shadow-sm transition-all duration-300">Annually</button>
+            <button class="text-textMuted px-6 py-2 rounded-full text-sm font-bold hover:text-textMain transition-all duration-300">Monthly</button>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6 text-left">
+            <div class="gsap-stagger-item framer-card bg-transparent p-8 rounded-[2rem] flex flex-col h-full border border-transparent hover:border-gray-200 hover:bg-white transition-all duration-500">
+                <h3 class="text-xl font-bold text-textMain mb-2">Community System</h3>
+                <p class="text-3xl font-bold text-textMain mb-4">Free</p>
+                <p class="text-sm text-textMuted mb-8">For local communities with light needs.</p>
+                <ul class="space-y-4 text-sm text-textMain mb-8 flex-1">
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Basic environmental alerts</li>
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Community Dashboard UI</li>
+                </ul>
+                <a href="#contact" class="framer-button block text-center bg-white border border-borderLight text-textMain px-6 py-3 rounded-full text-[15px] font-bold hover:bg-gray-50">Try free</a>
+            </div>
+
+            <div class="gsap-stagger-item framer-card bg-white p-8 rounded-[2rem] border border-borderLight shadow-float flex flex-col h-full relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-bold border border-green-200">Save 20%</div>
+                <h3 class="text-xl font-bold text-textMain mb-2">Enterprise Monitor</h3>
+                <p class="text-3xl font-bold text-textMain mb-4">$189<span class="text-lg text-textMuted">/mo</span></p>
+                <p class="text-sm text-textMuted mb-8">For pro use with infrastructure needs.</p>
+                <ul class="space-y-4 text-sm text-textMain mb-8 flex-1">
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Everything in Community</li>
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Advanced AI Vision tools</li>
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Local inference engine limits</li>
+                </ul>
+                <a href="#contact" class="framer-button block text-center bg-textMain text-white px-6 py-3 rounded-full text-[15px] font-bold hover:bg-gray-800 shadow-lg">Get started</a>
+            </div>
+
+            <div class="gsap-stagger-item framer-card bg-transparent p-8 rounded-[2rem] flex flex-col h-full border border-transparent hover:border-gray-200 hover:bg-white transition-all duration-500">
+                <h3 class="text-xl font-bold text-textMain mb-2">Custom Integration</h3>
+                <p class="text-3xl font-bold text-textMain mb-4">Flexible</p>
+                <p class="text-sm text-textMuted mb-8">For cities & agencies with custom needs.</p>
+                <ul class="space-y-4 text-sm text-textMain mb-8 flex-1">
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Everything in Enterprise</li>
+                    <li class="flex items-center gap-3"><svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg> Hardware data import</li>
+                </ul>
+                <a href="#contact" class="framer-button block text-center bg-white border border-borderLight text-textMain px-6 py-3 rounded-full text-[15px] font-bold hover:bg-gray-50">Contact sales</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-[1000px] mx-auto text-center border-t border-borderLight/50" id="blog">
+        <p class="text-sm font-bold text-textMuted uppercase tracking-widest mb-4">BLOG</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-16">Ideas to level-up your resilience game</h2>
+        
+        <div class="bg-white rounded-[2rem] border border-borderLight shadow-soft overflow-hidden flex flex-col md:flex-row text-left mb-6 group cursor-pointer hover:shadow-float transition-shadow">
+            <div class="w-full md:w-1/2 bg-gray-100 h-[300px] flex items-center justify-center text-gray-300 font-mono text-xs">Thumbnail Placeholder</div>
+            <div class="p-10 w-full md:w-1/2 flex flex-col justify-center">
+                <span class="bg-black text-white text-xs font-bold px-3 py-1 rounded-md w-max mb-4">MUST READ</span>
+                <h3 class="text-2xl font-bold text-textMain mb-3 group-hover:text-gray-600 transition-colors">Disruptive Tech Revolution <span class="hidden">[cite: 116]</span></h3>
+                <p class="text-textMuted text-sm mb-6">Signifies transformative innovations that create new markets, replace traditional technologies, and drive profound changes across diverse industries, fostering rapid advancements. <span class="hidden">[cite: 117]</span></p>
+                <div class="flex items-center justify-between mt-auto">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-xs font-bold text-gray-500">D</div>
+                        <div>
+                            <p class="text-sm font-bold text-textMain">D-Tech Editorial</p>
+                            <p class="text-xs text-textMuted">Newsroom</p>
+                        </div>
+                    </div>
+                    <span class="text-xs font-bold text-textMuted border border-borderLight px-2 py-1 rounded">FEATURED</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+            <div class="bg-white rounded-[2rem] border border-borderLight shadow-sm p-5 cursor-pointer hover:shadow-md transition-shadow">
+                <div class="w-full h-40 bg-gray-100 rounded-2xl mb-4"></div>
+                <h4 class="font-bold text-textMain mb-2 text-lg">Smart Automation <span class="hidden">[cite: 110]</span></h4>
+                <p class="text-sm text-textMuted line-clamp-2">Smart Automation uses AI and IoT to streamline processes, enhance efficiency, and reduce manual effort, leading to optimized performance and significant improvements across various applications. <span class="hidden">[cite: 112]</span></p>
+                <div class="flex justify-between items-center mt-4">
+                    <span class="bg-blue-100 text-blue-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">TOOLS</span>
+                </div>
+            </div>
+            <div class="bg-white rounded-[2rem] border border-borderLight shadow-sm p-5 cursor-pointer hover:shadow-md transition-shadow">
+                <div class="w-full h-40 bg-gray-100 rounded-2xl mb-4"></div>
+                <h4 class="font-bold text-textMain mb-2 text-lg">Seamless Integration <span class="hidden">[cite: 102]</span></h4>
+                <p class="text-sm text-textMuted line-clamp-2">Disruptive technology transforms industries by introducing innovations that improve efficiency, challenge traditional norms, and create new opportunities for growth and advancement. <span class="hidden">[cite: 103]</span></p>
+                <div class="flex justify-between items-center mt-4">
+                    <span class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wider">INSIGHT</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-24 px-6 max-w-[1000px] mx-auto text-center border-t border-borderLight/50 gsap-reveal-container">
+        <p class="gsap-reveal text-sm font-bold text-textMuted uppercase tracking-widest mb-4">COMMUNITY</p>
+        <h2 class="gsap-reveal text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-12">Stay in the loop</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6 text-left">
+            <div class="gsap-stagger-item framer-card bg-white p-10 rounded-[2rem] border border-borderLight shadow-soft flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-textMain">X/Twitter</h3>
+                    <span class="text-sm font-bold text-textMuted bg-gray-100 px-3 py-1 rounded-full">15.2K FOLLOWERS</span>
+                </div>
+                <p class="text-textMuted mb-8 flex-1">Stay updated on new features and discover how others are using D-Tech globally.</p>
+                <a href="#" class="framer-button bg-gray-100 text-textMain px-6 py-3 rounded-full text-[15px] font-bold w-max hover:bg-gray-200">Follow us</a>
+            </div>
+            <div class="gsap-stagger-item framer-card bg-white p-10 rounded-[2rem] border border-borderLight shadow-soft flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-textMain">YouTube</h3>
+                    <span class="text-sm font-bold text-textMuted bg-gray-100 px-3 py-1 rounded-full">32K SUBSCRIBERS</span>
+                </div>
+                <p class="text-textMuted mb-8 flex-1">Tips, tutorials, and in-depth feature guides to inspire and enhance your workflow.</p>
+                <a href="#" class="framer-button bg-gray-100 text-textMain px-6 py-3 rounded-full text-[15px] font-bold w-max hover:bg-gray-200">Subscribe</a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="pt-24 pb-10 px-6 text-center gsap-reveal" id="contact">
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-textMain mb-4">Ready to get started</h2>
+        <p class="text-lg text-textMuted mb-10">Deploy D-Tech for your community today.</p>
+        <a href="#contact" class="framer-button bg-textMain text-white px-8 py-4 rounded-full text-[16px] font-medium hover:bg-gray-800 shadow-lg shadow-gray-900/20 inline-block mb-32">
+            Try D-Tech free
+        </a>
+
+        <div class="max-w-[1000px] mx-auto text-left flex flex-col md:flex-row justify-between gap-12 border-t border-borderLight/80 pt-10">
+            <div class="max-w-sm">
+                <div class="flex items-center gap-2 font-bold text-xl tracking-tight text-textMain mb-4">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                    D-Tech
+                </div>
+                <p class="text-sm text-textMuted mb-6 leading-relaxed">
+                    Registered Address: 101, Street no. 15, Khudi Ram Bose Marg, Pratap Nagar, Mayur Vihar Phase 1, New Delhi, Delhi 110091 <span class="hidden">[cite: 225]</span>
+                    <br><br>
+                    Corresponding Address: 2101, IN2, Eldeco Inspire, Sector 119, Noida, UP. 201301 <span class="hidden">[cite: 238]</span>
+                </p>
+            </div>
+            
+            <div class="flex gap-20">
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-widest text-textMain mb-6">PAGES</h4>
+                    <ul class="space-y-4 text-sm text-textMuted font-medium">
+                        <li><a href="#" class="hover:text-black">Home</a></li>
+                        <li><a href="#features" class="hover:text-black">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-black">Pricing</a></li>
+                        <li><a href="#blog" class="hover:text-black">Blog</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm uppercase tracking-widest text-textMain mb-6">INFORMATION</h4>
+                    <ul class="space-y-4 text-sm text-textMuted font-medium">
+                        <li><a href="#contact" class="hover:text-black">Contact</a></li>
+                        <li><a href="#" class="hover:text-black">Privacy</a></li>
+                        <li><a href="#" class="hover:text-black">Terms of use</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="max-w-[1000px] mx-auto mt-12 flex justify-between items-center text-xs font-medium text-textMuted">
+            <p>Copyright @ DTECH. All Rights Reserved.</p>
+            <div class="px-3 py-1.5 bg-white border border-borderLight rounded-md shadow-sm">Built locally</div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Initial Nav & Hero Animations (Spring style)
+            const heroTimeline = gsap.timeline();
+            
+            heroTimeline.to("#navbar", {
+                y: 0,
+                duration: 0.8,
+                ease: "power3.out",
+                delay: 0.1
+            });
+
+            heroTimeline.fromTo(".gsap-hero-item", 
+                { y: 30, autoAlpha: 0 },
+                { y: 0, autoAlpha: 1, duration: 0.8, stagger: 0.1, ease: "power3.out" },
+                "-=0.5"
+            );
+
+            // Single item scroll reveals
+            gsap.utils.toArray('.gsap-reveal').forEach(element => {
+                gsap.fromTo(element, 
+                    { y: 40, autoAlpha: 0 },
+                    {
+                        y: 0, 
+                        autoAlpha: 1, 
+                        duration: 0.8, 
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 85%", 
+                            once: true 
+                        }
+                    }
+                );
+            });
+
+            // Staggered Container Reveals (Bento Grids, Testimonials)
+            gsap.utils.toArray('.gsap-reveal-container').forEach(container => {
+                const items = container.querySelectorAll('.gsap-stagger-item');
+                if (items.length > 0) {
+                    gsap.fromTo(items,
+                        { y: 50, autoAlpha: 0 },
+                        {
+                            y: 0,
+                            autoAlpha: 1,
+                            duration: 0.8,
+                            stagger: 0.1,
+                            ease: "power3.out",
+                            scrollTrigger: {
+                                trigger: container,
+                                start: "top 80%",
+                                once: true
+                            }
+                        }
+                    );
+                }
+            });
+
+            // Smooth Continuous Marquee Scroll
+            // Moving -33.33% because the list is explicitly duplicated 3 times in HTML
+            gsap.to('.marquee-track', {
+                xPercent: -33.33,
+                ease: "none",
+                duration: 12,
+                repeat: -1
+            });
+        });
+    </script>
+
+</body>
+</html>
